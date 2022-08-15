@@ -1,0 +1,11 @@
+with T1 as(select *,
+dense_rank() over (order by P)  as val
+from BST
+) 
+select N,
+case when val=1 then 'Leaf'
+when val=(select max(T1.val) from T1) then 'Root'
+else 'Inner'
+end as value1
+from T1
+order by N
